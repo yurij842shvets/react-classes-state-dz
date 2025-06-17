@@ -1,6 +1,10 @@
 import "./App.css";
 import Statistics from "./Statistics";
+import FeedbackOptions from "./FeedbackOptions";
+import Section from "./Section";
 import { Component } from "react";
+
+const options = ["good", "neutral", "bad"];
 
 export default class App extends Component {
   constructor(props) {
@@ -12,16 +16,6 @@ export default class App extends Component {
     };
   }
 
-  handleGoodIncrement = () => {
-    this.setState({ good: this.state.good + 1 });
-  };
-  handleNeutralIncrement = () => {
-    this.setState({ neutral: this.state.neutral + 1 });
-  };
-  handleBadIncrement = () => {
-    this.setState({ bad: this.state.bad + 1 });
-  };
-
   countTotalFeedback = () => {
     const { good, neutral, bad } = this.state;
     return good + neutral + bad;
@@ -32,19 +26,32 @@ export default class App extends Component {
     return total ? Math.round((good / total) * 100) : 0;
   };
 
+  onLeaveFeedback = (option) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      [option]: prevState[option] + 1,
+    }));
+  };
+
   render() {
     return (
       <>
-        <Statistics
-          good={this.state.good}
-          neutral={this.state.neutral}
-          bad={this.state.bad}
-          total={this.countTotalFeedback()}
-          positiveFeedback={this.countPositiveFeedbackPercentage()}
-          handleGoodIncrement={this.handleGoodIncrement}
-          handleNeutralIncrement={this.handleNeutralIncrement}
-          handleBadIncrement={this.handleBadIncrement}
-        />
+        <Section title="Leave Feedback">
+          <FeedbackOptions
+            options={options}
+            onLeaveFeedback={this.onLeaveFeedback}
+          />
+        </Section>
+        
+        <Section title="Feedback Statistics">
+          <Statistics
+            good={this.state.good}
+            neutral={this.state.neutral}
+            bad={this.state.bad}
+            total={this.countTotalFeedback()}
+            positiveFeedback={this.countPositiveFeedbackPercentage()}
+          />
+        </Section>
       </>
     );
   }

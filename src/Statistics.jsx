@@ -12,19 +12,9 @@ export default class Statistics extends Component {
       bad,
       total,
       positiveFeedback,
-      handleGoodIncrement,
-      handleNeutralIncrement,
-      handleBadIncrement,
     } = this.props;
     return (
       <>
-        <h1>Statistics</h1>
-        <div>
-          <button onClick={handleGoodIncrement}>Good</button>
-          <button onClick={handleNeutralIncrement}>Neutral</button>
-          <button onClick={handleBadIncrement}>Bad</button>
-        </div>
-
         <div>
           <p>Good: {good}</p>
           <p>Neutral: {neutral}</p>
